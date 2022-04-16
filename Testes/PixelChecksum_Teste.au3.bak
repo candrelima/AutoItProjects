@@ -1,0 +1,17 @@
+#include <MsgBoxConstants.au3>
+
+; Wait until something changes in the region 0,0 to 50,50
+
+; Get initial checksum
+;~ MsgBox($MB_SYSTEMMODAL, "", "Something in the region has changed!" & $iCheckSum)
+
+AdlibRegister("pixel", 100)
+; Wait for the region to change, the region is checked every 100ms to reduce CPU load
+
+Func pixel
+	Local $iCheckSum = PixelChecksum(563, 178, 611, 219)
+	While $iCheckSum = PixelChecksum(563, 178, 611, 219)
+		ToolTip("Whiling", 10, 10, "Testing")
+	WEnd
+	MsgBox($MB_SYSTEMMODAL, "", "Something in the region has changed!" & $iCheckSum)
+EndFunc
